@@ -1,12 +1,13 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 )
 
 func main() {
-	reader := NewReader(os.Stdin)
+	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("Enter text: ")
 
 	input, _ := reader.ReadString('\n')

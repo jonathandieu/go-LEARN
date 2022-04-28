@@ -15,10 +15,15 @@ func compute(value int) {
 
 func main() {
 	var someString string = "Welcome to Jon's introduction to concurrency in Go!"
+	var args string
+
 	fmt.Println(someString)
 	go compute(5)
 
 	go compute(5)
 	fmt.Println("Second time's the charm...")
-	fmt.Scanln()
+
+	fmt.Println("Please type in a string")
+	fmt.Scan(&args)
+	fmt.Println("Ayooo! You typed:", args)
 }

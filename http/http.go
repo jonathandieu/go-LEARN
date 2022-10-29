@@ -5,8 +5,16 @@ import (
 	"net/http"
 )
 
+func howdy(w http.ResponseWriter, req *http.Request) {
+        fmt.Fprintf(w, "Howdy there!\n")
+}
+
 func hello(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "Hey there!\n")
+}
+
+func endpoint(w http.ResponseWriter, req *http.Request) {
+	fmt.Fprintf(w, "This is a sweet endpoint, bro\n")
 }
 
 func headers(w http.ResponseWriter, req *http.Request) {

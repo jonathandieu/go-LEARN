@@ -1,22 +1,26 @@
 name: golangci-lint
-on:
-  push:
-    branches:
-    - main
-  pull_request:
-permissions:
-  contents: read
-
+on: [push, pull_request]
 jobs:
-  golangci:
-    name: lint
+  resolve-modules:
+    name: Resolve Modules
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-go@v5
-      with:
-        go-version: stable
-    - name: golangci-lint
-      uses: golangci/golangci-lint-action@v6
-      with:
-        version: v1.58
+      - name: Checkout Sources
+        uses: actions/checkout@v2
+      - id: set-matrix
+        run: ./tools/resolve-modules.sh
+  golangci:
+    name: Linter
+    needs: resolve-modules
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJson(needs.resolve-modules.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v1
+        with:
+          version: v1.28
+          working-directory: ${{ matrix.workdir }}

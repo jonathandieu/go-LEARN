@@ -1,5 +1,15 @@
 name: golangci-lint
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.go"
+      - "**/go.mod"
+  pull_request:
+    paths:
+      - "**/*.go"
+      - "**/go.mod"
 jobs:
   resolve-modules:
     name: Resolve Modules
